@@ -6,13 +6,24 @@
   <title>STTRIVV MAGAZINE</title>
   <meta name="description" content="Revista digital: issues, editoriales y artículos." />
   <style>
-    :root{
-      --bg:#0b0c10;
-      --panel:#101218;
-      --ink:#f3f4f6;
-      --muted:#a6a7ab;
-      --line:#232634;
-      --accent:#e8e1d6; /* crema editorial */
+    ::root{
+  --bg:#070a14;
+  --panel:#0b1024;
+  --ink:#f4f6ff;
+  --muted:#b7bdd6;
+  --line:rgba(255,255,255,.12);
+
+  --accent:#1a2aba;
+  --accent2:#0b35ff;
+  --silver:#cfd3e6;
+
+  --shadow: 0 14px 46px rgba(0,0,0,.55);
+  --radius: 20px;
+
+  --max: 1080px;
+  --serif: ui-serif, Georgia, "Times New Roman", Times, serif;
+  --sans: ui-sans-serif, system-ui;
+    }/* crema editorial */
       --shadow: 0 12px 40px rgba(0,0,0,.45);
       --radius: 20px;
       --max: 1080px;
@@ -29,10 +40,17 @@
     }
     a{color:inherit; text-decoration:none}
     header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: rgba(11,12,16,.75);
-      border-bottom:1px solid rgba(255,255,255,.06);
+  position:sticky;
+  top:0;
+  z-index:50;
+  background: linear-gradient(
+    90deg,
+    #0b0f2a 0%,
+    #1a2aba 55%,
+    #2a00ff 100%
+  );
+  border-bottom:1px solid rgba(255,255,255,.18);
+    }
     }
     .wrap{max-width:var(--max); margin:0 auto; padding:18px 18px}
     .brand{
@@ -57,17 +75,19 @@
       display:flex; gap:10px; align-items:center; flex-wrap:wrap;
       justify-content:flex-end;
     }
-    .chip{
-      border:1px solid rgba(255,255,255,.12);
-      padding:8px 10px;
-      border-radius:999px;
-      font-size:12px;
-      color:var(--muted);
-      transition:.15s ease;
-    }
-    .chip:hover{border-color:rgba(255,255,255,.25); color:var(--ink)}
-    .hero{
-      padding:36px 0 8px;
+    ..chip{
+  border:1px solid rgba(207,211,230,.35);
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:12px;
+  color: rgba(244,246,255,.92);
+  background: rgba(0,0,0,.18);
+  transition:.15s ease;
+}
+.chip:hover{
+  border-color: rgba(207,211,230,.70);
+  background: rgba(0,0,0,.28);
+}
     }
     .hero h2{
       margin:0 0 10px;
