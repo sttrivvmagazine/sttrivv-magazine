@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>STTRIVV MAGAZINE</title>
+  <meta name="description" content="Revista digital: issues, editoriales y artículos." />
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --panel:#101218;
+      --ink:#f3f4f6;
+      --muted:#a6a7ab;
+      --line:#232634;
+      --accent:#e8e1d6; /* crema editorial */
+      --shadow: 0 12px 40px rgba(0,0,0,.45);
+      --radius: 20px;
+      --max: 1080px;
+      --serif: ui-serif, Georgia, "Times New Roman", Times, serif;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 800px at 20% 0%, #15182a 0%, var(--bg) 55%) fixed;
+      color:var(--ink);
+      font-family:var(--sans);
+      letter-spacing:.2px;
+    }
+    a{color:inherit; text-decoration:none}
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,12,16,.75);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .wrap{max-width:var(--max); margin:0 auto; padding:18px 18px}
+    .brand{
+      display:flex; gap:14px; align-items:baseline; justify-content:space-between;
+    }
+    .logo{
+      display:flex; gap:12px; align-items:baseline;
+    }
+    .logo h1{
+      margin:0;
+      font-size:18px;
+      letter-spacing: .22em;
+      text-transform:uppercase;
+    }
+    .logo span{
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+    nav{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .chip{
+      border:1px solid rgba(255,255,255,.12);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:var(--muted);
+      transition:.15s ease;
+    }
+    .chip:hover{border-color:rgba(255,255,255,.25); color:var(--ink)}
+    .hero{
+      padding:36px 0 8px;
+    }
+    .hero h2{
+      margin:0 0 10px;
+      font-family:var(--serif);
+      font-size:44px;
+      line-height:1.02;
+      letter-spacing:-.02em;
+    }
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      max-width:72ch;
+      font-size:15px;
+      line-height:1.6;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+      padding:18px 0 60px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+    .card:hover{transform: translateY(-2px); border-color: rgba(255,255,255,.18);}
+    .thumb{
+      aspect-ratio: 16/10;
+      background:
+        linear-gradient(120deg, rgba(232,225,214,.18), rgba(21,24,42,.0)),
+        radial-gradient(700px 280px at 30% 20%, rgba(232,225,214,.20), transparent 60%),
+        radial-gradient(600px 240px at 80% 90%, rgba(120,135,255,.15), transparent 55%),
+        #0f1016;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      position:relative;
+    }
+    .thumb .badge{
+      position:absolute; left:14px; top:14px;
+      font-size:11px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--accent);
+    }
+    .card .body{padding:14px 14px 16px}
+    .meta{display:flex; gap:10px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:12px}
+    .title{
+      margin:10px 0 6px;
+      font-family:var(--serif);
+      font-size:22px;
+      line-height:1.15;
+    }
+    .excerpt{margin:0; color:var(--muted); font-size:13px; line-height:1.55}
+    .span-6{grid-column: span 6;}
+    .span-7{grid-column: span 7;}
+    .span-5{grid-column: span 5;}
+    .span-12{grid-column: span 12;}
+    @media (max-width: 860px){
+      .hero h2{font-size:34px}
+      .span-6,.span-7,.span-5{grid-column: span 12;}
+      nav{justify-content:flex-start}
+    }
+
+    /* Reader */
+    .reader{
+      display:none;
+      margin:18px 0 60px;
+      background: rgba(16,18,24,.65);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+    }
+    .reader.show{display:block;}
+    .readerTop{
+      padding:16px 16px 0;
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background: linear-gradient(180deg, rgba(232,225,214,.08), rgba(0,0,0,0));
+    }
+    .readerTop h3{
+      margin:0 0 8px;
+      font-family:var(--serif);
+      font-size:28px;
+      letter-spacing:-.01em;
+    }
+    .readerTop .sub{margin:0 0 14px; color:var(--muted); font-size:13px; line-height:1.5}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid rgba(255,255,255,.14);
+      padding:10px 12px;
+      border-radius:999px;
+      background: rgba(0,0,0,.25);
+      font-size:12px;
+      color:var(--ink);
+      cursor:pointer;
+      user-select:none;
+      transition:.15s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{border-color:rgba(255,255,255,.28); transform: translateY(-1px);}
+    .readerBody{padding:18px 16px 22px}
+    .toc{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .toc a{
+      display:flex; gap:10px; justify-content:space-between; align-items:baseline;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+    }
+    .toc a:hover{border-color:rgba(255,255,255,.22)}
+    .toc small{color:var(--muted)}
+    @media (max-width: 860px){
+      .toc{grid-template-columns: 1fr;}
+    }
+
+    .post{
+      display:none;
+      padding:0 0 60px;
+    }
+    .post.show{display:block;}
+    .postHeader{
+      padding:18px 0 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      margin-bottom:18px;
+    }
+    .postHeader h2{
+      margin:10px 0 8px;
+      font-family:var(--serif);
+      font-size:42px;
+      line-height:1.05;
+    }
+    .kicker{
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:11px;
+    }
+    .byline{color:var(--muted); font-size:13px; line-height:1.5}
+    .content{
+      max-width: 74ch;
+      font-size:16px;
+      line-height:1.8;
+      color: #e9e9ec;
+    }
+    .content p{margin: 0 0 16px;}
+    footer{
+      border-top:1px solid rgba(255,255,255,.08);
+      color:var(--muted);
+      padding:22px 0;
+      font-size:12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap brand">
+      <div class="logo">
+        <h1>STTRIVV</h1>
+        <span>MAGAZINE</span>
+      </div>
+      <nav>
+        <a class="chip" href="#home">Home</a>
+        <a class="chip" href="#issue-001">Issue 001</a>
+        <a class="chip" href="#about">About</a>
+        <a class="chip" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="homeView">
+      <div class="hero">
+        <h2>Editorial digital. Minimal. Fashion.</h2>
+        <p>
+          Issues, artículos y editoriales. Este formato está pensado para que lo uses como revista real:
+          cada issue tiene su tabla de contenidos y cada artículo tiene su URL (hash) para compartir.
+        </p>
+      </div>
+
+      <div class="grid" id="issuesGrid"></div>
+    </section>
+
+    <section class="reader" id="issueView"></section>
+
+    <section class="post" id="postView"></section>
+
+    <section class="reader" id="aboutView">
+      <div class="readerTop">
+        <div>
+          <h3>About</h3>
+          <p class="sub">Quiénes somos, concepto editorial, línea estética, manifiesto.</p>
+        </div>
+        <a class="btn" href="#home">Volver</a>
+      </div>
+      <div class="readerBody">
+        <div class="content">
+          <p><strong>STTRIVV MAGAZINE</strong> es un espacio editorial para moda, producción, imagen y cultura.</p>
+          <p>Podés editar este texto con tu manifiesto, valores y líneas temáticas (local/nacional/global, archivo, entrevistas).</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reader" id="contactView">
+      <div class="readerTop">
+        <div>
+          <h3>Contact</h3>
+          <p class="sub">Dejá tus links / mail / formulario.</p>
+        </div>
+        <a class="btn" href="#home">Volver</a>
+      </div>
+      <div class="readerBody">
+        <div class="content">
+          <p>Mail: <em>tuemail@dominio.com</em></p>
+          <p>IG: <em>@st.trivv</em></p>
+          <p>Si querés, te lo armo con formulario real (Formspree) sin backend.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">© <span id="year"></span> STTRIVV MAGAZINE — Digital issue format.</div>
+  </footer>
+
+  <script>
+    const DATA = {
+      issues: [
+        {
+          id: "001",
+          title: "Issue 001 — The Under Edit",
+          date: "Feb 2026",
+          tag: "Issue",
+          description: "Producción, prendas y estética under con dirección editorial minimal.",
+          posts: [
+            { id:"post-editorial-001", section:"Editorial", title:"Clay Court Editorial", author:"Octavio Triveri", date:"Feb 2026",
+              body:[
+                "Texto del editorial. Contá la historia de la producción, mood, referencias, decisiones de styling y locación.",
+                "Acá podés agregar fotos luego (si querés, lo adaptamos a galería o carrusel)."
+              ]
+            },
+            { id:"post-style-001", section:"Style", title:"Cómo construir un look under sin perder el filo", author:"STTRIVV", date:"Feb 2026",
+              body:[
+                "Tips: silueta, textura, balance entre básico y statement, y cómo repetir prendas sin que se note.",
+                "Cierre editorial con una frase/manifiesto."
+              ]
+            },
+            { id:"post-archive-001", section:"Archive", title:"Archivo: piezas y códigos (Drop 001)", author:"STTRIVV", date:"Feb 2026",
+              body:[
+                "Presentación de piezas, detalles de confección, materiales, y cómo se usan en styling.",
+                "Podés sumar links a tienda o a IG."
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    const $ = (q) => document.querySelector(q);
+    const issuesGrid = $("#issuesGrid");
+    const issueView = $("#issueView");
+    const postView = $("#postView");
+    const homeView = $("#homeView");
+    const aboutView = $("#aboutView");
+    const contactView = $("#contactView");
+
+    $("#year").textContent = new Date().getFullYear();
+
+    function renderHome(){
+      issuesGrid.innerHTML = "";
+      DATA.issues.forEach((issue, idx) => {
+        const spanClass = idx % 3 === 0 ? "span-7" : (idx % 3 === 1 ? "span-5" : "span-6");
+        const el = document.createElement("a");
+        el.href = `#issue-${issue.id}`;
+        el.className = `card ${spanClass}`;
+        el.innerHTML = `
+          <div class="thumb"><div class="badge">${issue.tag} ${issue.id}</div></div>
+          <div class="body">
+            <div class="meta"><span>${issue.date}</span><span>•</span><span>${issue.posts.length} artículos</span></div>
+            <div class="title">${issue.title}</div>
+            <p class="excerpt">${issue.description}</p>
+          </div>
+        `;
+        issuesGrid.appendChild(el);
+      });
+    }
+
+    function showOnly(view){
+      [homeView, issueView, postView, aboutView, contactView].forEach(v => v.classList.remove("show"));
+      issueView.classList.remove("show");
+      postView.classList.remove("show");
+      aboutView.classList.remove("show");
+      contactView.classList.remove("show");
+
+      homeView.style.display = "none";
+      issueView.style.display = "none";
+      postView.style.display = "none";
+      aboutView.style.display = "none";
+      contactView.style.display = "none";
+
+      view.style.display = "block";
+      if(view === issueView || view === aboutView || view === contactView) view.classList.add("show");
+      if(view === postView) view.classList.add("show");
+    }
+
+    function renderIssue(issueId){
+      const issue = DATA.issues.find(i => i.id === issueId);
+      if(!issue){ location.hash = "#home"; return; }
+      issueView.innerHTML = `
+        <div class="readerTop">
+          <div>
+            <h3>${issue.title}</h3>
+            <p class="sub">${issue.description}</p>
+            <div class="meta"><span>${issue.date}</span><span>•</span><span>${issue.posts.length} artículos</span></div>
+          </div>
+          <a class="btn" href="#home">Volver</a>
+        </div>
+        <div class="readerBody">
+          <div class="toc">
+            ${issue.posts.map(p => `
+              <a href="#${p.id}">
+                <div>
+                  <div><strong>${p.title}</strong></div>
+                  <small>${p.section} • ${p.author}</small>
+                </div>
+                <small>${p.date}</small>
+              </a>
+            `).join("")}
+          </div>
+        </div>
+      `;
+      showOnly(issueView);
+    }
+
+    function renderPost(postId){
+      let found = null, issueId = null;
+      for(const issue of DATA.issues){
+        const p = issue.posts.find(x => x.id === postId);
+        if(p){ found = p; issueId = issue.id; break; }
+      }
+      if(!found){ location.hash = "#home"; return; }
+
+      postView.innerHTML = `
+        <div class="postHeader">
+          <div class="kicker">${found.section}</div>
+          <h2>${found.title}</h2>
+          <div class="byline">${found.author} • ${found.date} • <a class="chip" href="#issue-${issueId}">Volver al issue</a></div>
+        </div>
+        <div class="content">
+          ${found.body.map(par => `<p>${par}</p>`).join("")}
+        </div>
+      `;
+      showOnly(postView);
+    }
+
+    function router(){
+      const hash = (location.hash || "#home").replace("#","");
+      if(hash === "home"){ showOnly(homeView); return; }
+      if(hash === "about"){ showOnly(aboutView); return; }
+      if(hash === "contact"){ showOnly(contactView); return; }
+
+      if(hash.startsWith("issue-")){
+        renderIssue(hash.replace("issue-",""));
+        return;
+      }
+      if(hash.startsWith("post-")){
+        renderPost(hash);
+        return;
+      }
+      // fallback
+      location.hash = "#home";
+    }
+
+    renderHome();
+    window.addEventListener("hashchange", router);
+    router();
+  </script>
+</body>
+  </html>
